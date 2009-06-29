@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Recent Hadoop Job Timelines</title>
+
+    <!-- Framework CSS -->
+	<link rel="stylesheet" href="/static/screen.css" type="text/css" media="screen, projection">
+	<link rel="stylesheet" href="/static/print.css" type="text/css" media="print">
+    <!--[if lt IE 8]><link rel="stylesheet" href="../../blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+	
+	<!-- Import fancy-type plugin for the sample page. -->
+	<link rel="stylesheet" href="/static/plugins/fancy-type/screen.css" type="text/css" media="screen, projection">
+	<script type="text/javascript">
+        var disqus_developer = true;
+    </script>
+    <style>
+        img { margin: 10px }
+    </style>
+</head>
+
+<body>
+
+	<div class="container" style="margin-top:20px">  
+	    
+		<h1>Recent Hadoop Job Timelines</h1>
+		<hr>
+
+		<div class="span-25 prepend-1">
+		{% for graph in graphs %}		
+			<a href="/timeline/{{ graph.id }}"><img width="100" src="{{ graph.url }}"/></a>
+		{% endfor %}
+        </div>
+        
+		<hr>
+        
+	</div>
+
+</body>
+</html>

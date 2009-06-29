@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Hadoop Job Timeline - {{ tl.key.id }}</title>
+
+    <!-- Framework CSS -->
+	<link rel="stylesheet" href="/static/screen.css" type="text/css" media="screen, projection">
+	<link rel="stylesheet" href="/static/print.css" type="text/css" media="print">
+    <!--[if lt IE 8]><link rel="stylesheet" href="../../blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+	
+	<!-- Import fancy-type plugin for the sample page. -->
+	<link rel="stylesheet" href="/static/plugins/fancy-type/screen.css" type="text/css" media="screen, projection">
+	<script type="text/javascript">
+        var disqus_developer = true;
+    </script>
+    <style>
+        .loud { font-weight: bold }
+    </style>
+</head>
+
+<body>
+
+	<div class="container" style="margin-top:20px">  
+	    
+		<h1>Hadoop Job Timeline - {{ tl.key.id }}</h1>
+		
+		<div class="span-15 prepend-1" style="margin-bottom: 20px">
+			<p><img src="{{ graph }}"/></p>
+			
+			<div class="span-4 colborder">
+                <div class="loud">Start</div>
+                <div class="loud">End</div>
+                <div class="loud">Duration</div>
+                <div class="loud"># of Maps</div>
+                <div class="loud"># of Reducers</div>
+            </div>
+			<div class="span-4">
+			    <div>{{ tl.start }}</div>
+			    <div>{{ tl.end }}</div>
+			    <div>{{ tl.duration }}</div>
+			    <div>{{ tl.mapcount }}</div>
+			    <div>{{ tl.redcount }}</div>
+		    </div>
+		    
+        </div>
+
+		<hr>
+
+		<div class="span-15 prepend-1timeline.html">
+			<div id="disqus_thread"></div><script type="text/javascript" src="http://disqus.com/forums/hadooptimelines/embed.js"></script><noscript><a href="http://hadooptimelines.disqus.com/?url=ref">View the discussion thread.</a></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+        </div>
+        
+	</div>
+
+</body>
+</html>
