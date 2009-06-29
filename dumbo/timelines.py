@@ -1,6 +1,6 @@
 import sys
 import re
-import urllib
+import urllib, httplib
 import dumbo
 
 ATTRIBUTES_PATTERN = re.compile('(?P<name>[^=]+)="(?P<value>[^"]*)" *')
@@ -15,13 +15,13 @@ def mapper(key, line):
     attrs.setdefault(name, [])
     attrs[name].append(int(value)/scale if name in INT_PROPS else value)
 
-  if event == 'Job':
-    # Job has multiple JOBNAME, taking the longest for now. lame.
-    names = sorted(attrs['JOBNAME'],lambda x,y: cmp(len(y), len(x)))
-    #print >> sys.stderr, 'map', names[0], attrs.keys()
-    yield names[0], (event, attrs)
-  elif 'JOBNAME' in attrs:
-    yield attrs['JOBNAME'][0], (event, attrs)
+  if 'JOBNAME' in attrs:
+    if event == 'Job':
+      # Job has multiple JOBNAME, taking the longest for now. lame.
+      names = sorted(attrs['JOBNAME'],lambda x,y: cmp(len(y), len(x)))
+      yield names[0], (event, attrs)
+    else:
+      yield attrs['JOBNAME'][0], (event, attrs)
     
 def reducer(key, values):
   
@@ -129,9 +129,10 @@ def reducer(key, values):
   params['mapcount'] = len([k for k in mapEndTime.keys() if k in mapStartTime and k in final])
   params['redcount'] = len([k for k in reduceEndTime.keys() if k in reduceStartTime and k in final])
   
-  data = urllib.urlopen("http://hadoop-timelines.appspot.com/timelines", urllib.urlencode(params))
-  
-  yield key, params
+  conn = httplib.HTTPConnection("hadoop-timelines.appspot.com:80")
+  conn.request("POST", "/timelines", urllib.urlencode(params))
+  response = conn.getresponse()
+  yield key, response.getheader('location')
   
 if __name__ == "__main__":
   dumbo.run(mapper, reducer)
